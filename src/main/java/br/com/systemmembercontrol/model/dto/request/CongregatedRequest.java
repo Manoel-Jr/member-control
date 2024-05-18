@@ -17,5 +17,4 @@ public class CongregatedRequest {
     private String email;
     private Profile profile;
     private LocalDate birthday;
-    private LocalDate dataCreation;
 }
