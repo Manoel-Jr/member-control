@@ -1,5 +1,8 @@
 package br.com.systemmembercontrol.service.impl;
 
+import br.com.systemmembercontrol.excepion.EmailIsBeingUsedException;
+import br.com.systemmembercontrol.excepion.EmailIsNullException;
+import br.com.systemmembercontrol.excepion.NotMemberRegisteredException;
 import br.com.systemmembercontrol.model.Congregated;
 import br.com.systemmembercontrol.model.dto.request.CongregatedRequest;
 import br.com.systemmembercontrol.model.dto.request.CongregatedUpdateRequest;
@@ -29,7 +32,7 @@ public class CongregatedServiceImpl implements CongregatedService {
             Congregated congregation = modelMapper.map(request,Congregated.class);
             return modelMapper.map(repository.save(congregation),CongregatedResponse.class);
         }
-        throw new RuntimeException();
+        throw new EmailIsBeingUsedException();
     }
 
     @Override
@@ -44,14 +47,14 @@ public class CongregatedServiceImpl implements CongregatedService {
         if(congregated != null){
             return modelMapper.map(congregated,CongregatedResponse.class);
         }
-        throw new RuntimeException();
+        throw new EmailIsNullException();
     }
 
     @Override
     public List<CongregatedResponse> listAll() {
         List<Congregated> congregates = repository.findAll();
         if(congregates.isEmpty()){
-            throw new RuntimeException();
+            throw new NotMemberRegisteredException();
         }
         return List.of(modelMapper.map(congregates,CongregatedResponse[].class));
     }

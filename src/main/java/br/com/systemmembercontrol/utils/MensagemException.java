@@ -10,8 +10,10 @@ public class MensagemException {
 
     public static final String USER_NOT_FOUND = " Usuario não encontrado!";
 
-    public static final String EMAIL_IS_NULL = "CPF nulo!";
+    public static final String CPF_IS_NULL = "CPF nulo!";
 
     public static final String NO_REGISTERED_MEMBERS = " Não há Membros Registrado!";
-    
+
+    public static final String EMAIL_IS_NULL = "E-mail Informado e Nulo!";
+
 }

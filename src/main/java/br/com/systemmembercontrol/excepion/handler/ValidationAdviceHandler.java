@@ -40,6 +40,18 @@ public class ValidationAdviceHandler {
 
     @ExceptionHandler(CpfIsNullException.class)
     public ResponseEntity<Error> cpfIsNull(CpfIsNullException exception, HttpServletRequest request){
+        Error error = new Error(LocalDateTime.now(),HttpStatus.BAD_REQUEST.value(),MensagemException.CPF_IS_NULL,request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(NotMemberRegisteredException.class)
+    public ResponseEntity<Error> notMemberRegistered(NotMemberRegisteredException exception, HttpServletRequest request){
+        Error error = new Error(LocalDateTime.now(),HttpStatus.BAD_REQUEST.value(),MensagemException.NO_REGISTERED_MEMBERS,request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(EmailIsNullException.class)
+    public ResponseEntity<Error> emailIsNull(EmailIsNullException exception, HttpServletRequest request){
         Error error = new Error(LocalDateTime.now(),HttpStatus.BAD_REQUEST.value(),MensagemException.EMAIL_IS_NULL,request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }

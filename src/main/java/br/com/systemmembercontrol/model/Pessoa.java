@@ -1,20 +1,23 @@
 package br.com.systemmembercontrol.model;
 
 import br.com.systemmembercontrol.enums.Profile;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.MappedSuperclass;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
 @Data
 @NoArgsConstructor
-public abstract class Pessoa {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@AllArgsConstructor
+@MappedSuperclass
+public abstract class Pessoa  implements  Serializable {
 
     @Column
     private String name;
