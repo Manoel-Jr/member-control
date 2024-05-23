@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public enum Profile {
 
-    ADMIN(0, "ADMIN"),MEMBRO(1, "MEMBRO"),CONGREGADO(2, "CONGREGADO"), VISITANTE(3, "VISITANTE");
+    MEMBER(1, "MEMBER"),CONGREGATED(2, "CONGREGATED"),USER_MEMBER(3, "USER_MEMBER");
 
     private final Integer code;
     private final String description;

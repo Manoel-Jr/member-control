@@ -1,5 +1,6 @@
 package br.com.systemmembercontrol.model;
 
+import br.com.systemmembercontrol.enums.Profile;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,9 @@ public class User implements Serializable {
 
     @Column(unique = true)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Profile profile;
 
     @Column
     private String password;

@@ -5,12 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class MemberUpdateRequest {
+import java.time.LocalDate;
 
-    private String email;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ChristianRequest {
+
+    private String name;
     private String phone;
+    private String email;
+    private String baptized;
     private Profile profile;
+    private LocalDate birthday;
 }

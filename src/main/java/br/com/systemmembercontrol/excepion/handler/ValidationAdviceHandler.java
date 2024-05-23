@@ -37,13 +37,6 @@ public class ValidationAdviceHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
-
-    @ExceptionHandler(CpfIsNullException.class)
-    public ResponseEntity<Error> cpfIsNull(CpfIsNullException exception, HttpServletRequest request){
-        Error error = new Error(LocalDateTime.now(),HttpStatus.BAD_REQUEST.value(),MensagemException.CPF_IS_NULL,request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-    }
-
     @ExceptionHandler(NotMemberRegisteredException.class)
     public ResponseEntity<Error> notMemberRegistered(NotMemberRegisteredException exception, HttpServletRequest request){
         Error error = new Error(LocalDateTime.now(),HttpStatus.BAD_REQUEST.value(),MensagemException.NO_REGISTERED_MEMBERS,request.getRequestURI());
@@ -53,6 +46,12 @@ public class ValidationAdviceHandler {
     @ExceptionHandler(EmailIsNullException.class)
     public ResponseEntity<Error> emailIsNull(EmailIsNullException exception, HttpServletRequest request){
         Error error = new Error(LocalDateTime.now(),HttpStatus.BAD_REQUEST.value(),MensagemException.EMAIL_IS_NULL,request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(UserNotProfileException.class)
+    public ResponseEntity<Error> userNotProfile(UserNotProfileException exception, HttpServletRequest request){
+        Error error = new Error(LocalDateTime.now(),HttpStatus.BAD_REQUEST.value(),MensagemException.USER_NOT_PROFILE,request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }

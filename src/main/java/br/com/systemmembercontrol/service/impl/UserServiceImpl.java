@@ -4,9 +4,10 @@ import br.com.systemmembercontrol.enums.Profile;
 import br.com.systemmembercontrol.excepion.EmailIsBeingUsedException;
 import br.com.systemmembercontrol.excepion.PersonIsNotMemberException;
 import br.com.systemmembercontrol.excepion.UserNotFoundException;
+import br.com.systemmembercontrol.model.Christian;
 import br.com.systemmembercontrol.model.User;
 import br.com.systemmembercontrol.model.dto.request.UserRequest;
-import br.com.systemmembercontrol.model.dto.response.MemberResponse;
+import br.com.systemmembercontrol.model.dto.response.ChristianResponse;
 import br.com.systemmembercontrol.model.dto.response.UserResponse;
 import br.com.systemmembercontrol.repositories.UserRepository;
 import br.com.systemmembercontrol.service.UserService;
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     private final ModelMapper modelMapper;
 
-    private final MemberServiceImpl memberService;
+    private final ChristianServiceImpl service;
 
     @Override
     public UserResponse create(UserRequest request) {
@@ -34,12 +35,13 @@ public class UserServiceImpl implements UserService {
     }
 
     private User verificationMember(UserRequest request) {
-        MemberResponse member = memberService.consultForEmail(request.getEmail());
-        if(member.getProfile().equals(Profile.VISITANTE) || member.getProfile().equals(Profile.CONGREGADO)){
+        ChristianResponse christian = service.consultUsingEmail(request.getEmail());
+        if(!christian.getProfile().equals(Profile.MEMBER)){
             throw new PersonIsNotMemberException();
         }
         User user = modelMapper.map(request,User.class);
-        user.setName(member.getName());
+        user.setName(christian.getName());
+        user.setProfile(Profile.USER_MEMBER);
         userExistsByEmail(user.getEmail());
         return user;
     }
