@@ -10,6 +10,7 @@ public class MessagesException {
 
     public static final String USER_NOT_FOUND = " Usuario não encontrado!";
 
+    public static final String LIST_EMPTY = "Base de Dados Vazia!";
 
     public static final String NO_REGISTERED_MEMBERS = " Não há Membros Registrado!";
 

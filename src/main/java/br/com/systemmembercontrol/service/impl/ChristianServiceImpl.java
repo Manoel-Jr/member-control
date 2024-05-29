@@ -2,6 +2,7 @@ package br.com.systemmembercontrol.service.impl;
 
 import br.com.systemmembercontrol.excepion.EmailIsBeingUsedException;
 import br.com.systemmembercontrol.excepion.EmailIsNullException;
+import br.com.systemmembercontrol.excepion.ListEmptyException;
 import br.com.systemmembercontrol.model.Christian;
 import br.com.systemmembercontrol.model.dto.request.ChristianRequest;
 import br.com.systemmembercontrol.model.dto.request.ChristianUpdateRequest;
@@ -12,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,5 +48,21 @@ public class ChristianServiceImpl implements ChristianService {
         Christian christian = repository.findById(id).get();
         BeanUtils.copyProperties(request,christian, "id");
         return modelMapper.map(repository.save(christian),ChristianResponse.class);
+    }
+
+    @Override
+    public List<ChristianResponse> listAll() {
+        List<Christian> list = repository.findAll();
+        if(!list.isEmpty()){
+            return Arrays.asList(modelMapper.map(list,ChristianResponse[].class));
+        }
+        throw new ListEmptyException();
+    }
+
+    @Override
+    public void changeStatus(Long id) {
+        Christian christian = repository.findById(id).get();
+        christian.setStatus(!christian.isStatus());
+        repository.save(christian);
     }
 }

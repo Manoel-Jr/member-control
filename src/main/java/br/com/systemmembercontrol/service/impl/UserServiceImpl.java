@@ -4,7 +4,6 @@ import br.com.systemmembercontrol.enums.Profile;
 import br.com.systemmembercontrol.excepion.EmailIsBeingUsedException;
 import br.com.systemmembercontrol.excepion.PersonIsNotMemberException;
 import br.com.systemmembercontrol.excepion.UserNotFoundException;
-import br.com.systemmembercontrol.model.Christian;
 import br.com.systemmembercontrol.model.User;
 import br.com.systemmembercontrol.model.dto.request.UserRequest;
 import br.com.systemmembercontrol.model.dto.response.ChristianResponse;
@@ -22,7 +21,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
 
     private final ModelMapper modelMapper;
 
@@ -31,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse create(UserRequest request) {
         User user = verificationMember(request);
-        return modelMapper.map(userRepository.save(user),UserResponse.class);
+        return modelMapper.map(repository.save(user),UserResponse.class);
     }
 
     private User verificationMember(UserRequest request) {
@@ -41,25 +40,25 @@ public class UserServiceImpl implements UserService {
         }
         User user = modelMapper.map(request,User.class);
         user.setName(christian.getName());
-        user.setProfile(Profile.USER_MEMBER);
+        user.setProfile(Profile.ADM);
         userExistsByEmail(user.getEmail());
         return user;
     }
 
     private void userExistsByEmail(String email){
-        if (userRepository.existsByEmail(email)){
+        if (repository.existsByEmail(email)){
             throw new EmailIsBeingUsedException();
         }
     }
 
     @Override
     public UserResponse consult(Long id) {
-          Optional<User> user = Optional.ofNullable(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
+          Optional<User> user = Optional.ofNullable(repository.findById(id).orElseThrow(UserNotFoundException::new));
           return modelMapper.map(user,UserResponse.class);
     }
 
     @Override
     public void delete(Long id) {
-        userRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }

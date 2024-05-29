@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserResources {
 
-    private final UserService userService;
+    private final UserService service;
 
     @PostMapping
     public ResponseEntity<UserResponse> create(@RequestBody UserRequest request){
-        return  new ResponseEntity<>(userService.create(request), HttpStatus.CREATED);
+        return  new ResponseEntity<>(service.create(request), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> consult(@PathVariable Long id){
-        return  new ResponseEntity<>(userService.consult(id), HttpStatus.OK);
+        return  new ResponseEntity<>(service.consult(id), HttpStatus.OK);
     }
 }

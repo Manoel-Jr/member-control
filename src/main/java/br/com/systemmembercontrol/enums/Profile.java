@@ -1,13 +1,11 @@
 package br.com.systemmembercontrol.enums;
 
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public enum Profile {
 
-    MEMBER(1, "MEMBER"),CONGREGATED(2, "CONGREGATED"),USER_MEMBER(3, "USER_MEMBER");
+    MEMBER(1, "MEMBER"),CONGREGATED(2, "CONGREGATED"),ADM(3, "ADM");
 
     private final Integer code;
     private final String description;
@@ -26,6 +24,6 @@ public enum Profile {
                 return x;
             }
         }
-        throw new IllegalArgumentException("Ivalid Profile!!");
+        throw new IllegalArgumentException("Invalid Profile!!");
     }
 }

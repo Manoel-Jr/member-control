@@ -15,4 +15,7 @@ public class Christian extends Pessoa{
 
     @Column
     private String baptized;
+
+    @Column
+    private boolean status;
 }
