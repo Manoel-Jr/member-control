@@ -1,6 +1,5 @@
 package br.com.systemmembercontrol.service.impl;
 
-import br.com.systemmembercontrol.enums.Profile;
 import br.com.systemmembercontrol.excepion.EmailIsBeingUsedException;
 import br.com.systemmembercontrol.excepion.EmailIsNullException;
 import br.com.systemmembercontrol.model.Christian;
@@ -11,9 +10,8 @@ import br.com.systemmembercontrol.repositories.ChristianRepository;
 import br.com.systemmembercontrol.service.ChristianService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,20 +25,9 @@ public class ChristianServiceImpl implements ChristianService {
     public ChristianResponse create(ChristianRequest request) {
         if(!repository.existsByEmail(request.getEmail())){
             Christian christian = modelMapper.map(request,Christian.class);
-            if (validationChristian(christian)) return modelMapper.map(repository.save(christian), ChristianResponse.class);
+            return modelMapper.map(repository.save(christian), ChristianResponse.class);
         }
         throw  new EmailIsBeingUsedException();
-    }
-
-    private boolean validationChristian(Christian christian) {
-        if(christian.getBaptized().equals("sim")){
-            christian.setProfile(Profile.MEMBER);
-            return true;
-        } else if (christian.getBaptized().equals("não")) {
-            christian.setProfile(Profile.CONGREGATED);
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -54,8 +41,8 @@ public class ChristianServiceImpl implements ChristianService {
 
     @Override
     public ChristianResponse update(Long id, ChristianUpdateRequest request) {
-        Christian christian;
-        christian = modelMapper.map(request,Christian.class);
-        return modelMapper.map(christian,ChristianResponse.class);
+        Christian christian = repository.findById(id).get();
+        BeanUtils.copyProperties(request,christian, "id");
+        return modelMapper.map(repository.save(christian),ChristianResponse.class);
     }
 }

@@ -1,6 +1,6 @@
 package br.com.systemmembercontrol.utils;
 
-public class MensagemException {
+public class MessagesException {
 
     public static  final String MEMBER_NOT_FOUND = "Membro não Encontrado!";
 
