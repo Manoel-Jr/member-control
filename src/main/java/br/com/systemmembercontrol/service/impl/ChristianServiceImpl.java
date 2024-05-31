@@ -1,5 +1,6 @@
 package br.com.systemmembercontrol.service.impl;
 
+import br.com.systemmembercontrol.config.EmailVlidator;
 import br.com.systemmembercontrol.excepion.EmailIsBeingUsedException;
 import br.com.systemmembercontrol.excepion.EmailIsNullException;
 import br.com.systemmembercontrol.excepion.ListEmptyException;
@@ -25,14 +26,25 @@ public class ChristianServiceImpl implements ChristianService {
 
     private final ModelMapper modelMapper;
 
+    private final EmailVlidator validationEmail;
+
     @Override
     public ChristianResponse create(ChristianRequest request) {
+        if(EmailVlidator.isValidEmail(request.getEmail())){
+            return getChristianResponse(request);
+        }
+        throw new EmailIsNullException();
+    }
+
+    private ChristianResponse getChristianResponse(ChristianRequest request) {
         if(!repository.existsByEmail(request.getEmail())){
             Christian christian = modelMapper.map(request,Christian.class);
             return modelMapper.map(repository.save(christian), ChristianResponse.class);
         }
         throw  new EmailIsBeingUsedException();
     }
+
+
 
     @Override
     public ChristianResponse consultUsingEmail(String email) {
@@ -42,6 +54,7 @@ public class ChristianServiceImpl implements ChristianService {
         }
         throw new EmailIsNullException();
     }
+
 
     @Override
     public ChristianResponse update(Long id, ChristianUpdateRequest request) {

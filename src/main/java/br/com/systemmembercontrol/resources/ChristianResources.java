@@ -18,7 +18,7 @@ public class ChristianResources {
 
     private final ChristianService service;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ChristianResponse> create(@RequestBody ChristianRequest request){
         return new ResponseEntity<>(service.create(request), HttpStatus.CREATED);
     }
@@ -29,19 +29,19 @@ public class ChristianResources {
         return new ResponseEntity<>(service.consultUsingEmail(email), HttpStatus.OK);
     }
 
-    @PutMapping("/consult/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<ChristianResponse> update(@PathVariable Long id, @RequestBody ChristianUpdateRequest request){
         return new ResponseEntity<>(service.update(id,request), HttpStatus.OK);
     }
 
 
-    @GetMapping()
+    @GetMapping("/listAll/")
     public ResponseEntity<List<ChristianResponse>> listAll(){
         return new ResponseEntity<>(service.listAll(), HttpStatus.OK);
     }
 
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/change-status/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void changeStatus(@PathVariable Long id){
         service.changeStatus(id);

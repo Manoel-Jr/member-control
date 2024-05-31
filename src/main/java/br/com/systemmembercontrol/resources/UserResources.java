@@ -15,12 +15,12 @@ public class UserResources {
 
     private final UserService service;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<UserResponse> create(@RequestBody UserRequest request){
         return  new ResponseEntity<>(service.create(request), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/consult/{id}")
     public ResponseEntity<UserResponse> consult(@PathVariable Long id){
         return  new ResponseEntity<>(service.consult(id), HttpStatus.OK);
     }
