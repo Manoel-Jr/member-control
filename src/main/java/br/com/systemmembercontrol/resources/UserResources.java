@@ -24,4 +24,10 @@ public class UserResources {
     public ResponseEntity<UserResponse> consult(@PathVariable Long id){
         return  new ResponseEntity<>(service.consult(id), HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id){
+        service.delete(id);
+    }
 }

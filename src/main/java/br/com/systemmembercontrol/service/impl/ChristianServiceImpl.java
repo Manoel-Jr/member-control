@@ -26,7 +26,6 @@ public class ChristianServiceImpl implements ChristianService {
 
     private final ModelMapper modelMapper;
 
-    private final EmailVlidator validationEmail;
 
     @Override
     public ChristianResponse create(ChristianRequest request) {
